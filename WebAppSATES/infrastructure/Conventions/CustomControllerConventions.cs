@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAppSATES.infrastructure.Conventions
+namespace WebAppSATES.Infrastructure.Conventions
 {
     public class CustomControllerConventions:IControllerModelConvention
     {

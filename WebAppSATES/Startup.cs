@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppSATES.infrastructure.interfaces;
-using WebAppSATES.infrastructure.Services;
+//using WebAppSATES.infrastructure.Interfaces;
+using WebAppSATES.Infrastructure.Services;
+using WebAppSATES.Infrastructure.Interfaces;
 
 namespace WebAppSATES
 {
@@ -13,8 +14,8 @@ namespace WebAppSATES
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration Config) => Configuration = Config;
-
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) { services.AddSession(); services.AddMvc(); services.AddSingleton<IEmployeesData, InMemoryEmployeesData>(); }
+       /* public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
 
@@ -23,7 +24,7 @@ namespace WebAppSATES
                 {
                     //opt.Conventions.Add(new CustomControllerConvention());
                 });
-        }
+        }*/
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

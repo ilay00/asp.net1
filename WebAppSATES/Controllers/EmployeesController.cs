@@ -6,22 +6,17 @@ using WebAppSATES.Models;
 
 namespace WebAppSATES.Controllers
 {
-    //[Route("Users")]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _EmployeesData;
 
-        public EmployeesController(IEmployeesData EmployeesData) => _EmployeesData = EmployeesData;
-
-        public IActionResult Index()
+        public EmployeesController(IEmployeesData EmployeesData)
         {
-            ViewBag.SomeData = "Hello World!";
-            ViewData["Test"] = "TestData";
-
-            return View(_EmployeesData.GetAll());
+            _EmployeesData = EmployeesData;
         }
 
-        //[Route("{id}")]
+        public IActionResult Index() => View(_EmployeesData.GetAll());
+
         public IActionResult Details(int? Id)
         {
             if (Id is null)
@@ -50,7 +45,7 @@ namespace WebAppSATES.Controllers
             if (employee is null)
                 return NotFound();
 
-            return View(nameof(Details), employee);
+            return View(nameof(Details),employee);
         }
 
         public IActionResult Create() => View(new EmployeeView());
@@ -67,9 +62,12 @@ namespace WebAppSATES.Controllers
             return RedirectToAction("Details", new { NewEmployee.Id });
         }
 
-        public IActionResult Edit(int? Id)
+        public IActionResult Edit(int Id)
         {
-            if (Id is null) return View(new EmployeeView()); // Для создания нового сотрудника
+          /*  if (Id < 0)
+            {
+                return View(new EmployeeView()); // Для создания нового сотрудника
+            }*/
 
             if (Id < 0)
                 return BadRequest();
@@ -81,14 +79,20 @@ namespace WebAppSATES.Controllers
             return View(employee);
         }
 
-        [HttpPost]
+      [HttpPost]
         public IActionResult Edit(EmployeeView Employee)
         {
             if (Employee is null)
                 throw new ArgumentOutOfRangeException(nameof(Employee));
 
+            if (Employee.Age < 18)
+                ModelState.AddModelError(nameof(EmployeeView.Age), "Возраст не может быть меньше 18 лет");
+
+            if (Employee.FirstName == "123" && Employee.SecondName == "qwe")
+                ModelState.AddModelError("", "Странное сочетание имени и фамилии");
+
             if (!ModelState.IsValid)
-                View(Employee);
+                return View(Employee);
 
             var id = Employee.Id;
             if (id == 0)

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using WebAppSATES.infrastructure.interfaces;
+
+using WebAppSATES.Infrastructure.Interfaces;
 using WebAppSATES.Models;
 
-namespace WebAppSATES.infrastructure.Services
+namespace WebAppSATES.Infrastructure.Services
 {
     public class InMemoryEmployeesData : IEmployeesData
     {

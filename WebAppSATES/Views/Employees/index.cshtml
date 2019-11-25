@@ -3,6 +3,9 @@
     ViewBag.Title = "Сотрудники";
 }
 <h3>@ViewBag.Title</h3>
+
+<a asp-action="Create" class="btn btn-default">Создать</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -11,6 +14,7 @@
             <th>Имя</th>
             <th>Отчество</th>
             <th>Возраст</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +36,10 @@
                 </td>
                 <td>@employee.Patronymic</td>
                 <td>@employee.Age</td>
+                <td>
+                    <a asp-action="Edit" asp-route-Id="@employee.Id"><i class="fa fa-user-edit"></i></a>
+                    <a asp-action="Delete" asp-route-Id="@employee.Id"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         }
     </tbody>
